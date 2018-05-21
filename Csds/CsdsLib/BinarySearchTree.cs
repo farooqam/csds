@@ -71,6 +71,59 @@ namespace CsdsLib
             {
                 TraversePostOrder(Root, onVisitAction);
             }
+            else if (method == TraversalMethod.LevelOrder)
+            {
+                TraverseLevelOrder(Root, onVisitAction);
+            }
+        }
+
+        private void TraverseLevelOrder(TreeNode<TValue> root, Action<TreeNode<TValue>> onVisitAction)
+        {
+            var depth = GetMaxDepth(Root);
+
+            for (var level = 1; level <= depth; level++)
+            {
+                TraverseLevel(root, level, onVisitAction);
+            }
+        }
+
+        private void TraverseLevel(TreeNode<TValue> node, int level, Action<TreeNode<TValue>> onVisitAction)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            if (level == 1)
+            {
+                onVisitAction(node);
+            }
+
+            TraverseLevel(node.Left, level - 1, onVisitAction);
+            TraverseLevel(node.Right, level - 1, onVisitAction);
+        }
+
+        public int GetMaxDepth()
+        {
+            return Root == null ? 0 : GetMaxDepth(Root);
+        }
+
+        private int GetMaxDepth(TreeNode<TValue> node)
+        {
+            if (node == null)
+            {
+                return 0;
+            }
+
+            var leftDepth = GetMaxDepth(node.Left);
+            var rightDepth = GetMaxDepth(node.Right);
+
+            if (leftDepth > rightDepth)
+            {
+                return leftDepth + 1;
+            }
+
+            return rightDepth + 1;
         }
 
         private void TraverseInOrder(TreeNode<TValue> node, Action<TreeNode<TValue>> onVisitAction)

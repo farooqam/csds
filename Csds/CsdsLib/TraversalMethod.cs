@@ -4,6 +4,7 @@
     {
         InOrder = 0,
         PreOrder,
-        PostOrder
+        PostOrder,
+        LevelOrder
     }
 }
