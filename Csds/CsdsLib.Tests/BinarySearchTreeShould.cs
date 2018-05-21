@@ -70,5 +70,39 @@ namespace CsdsLib.Tests
 
             values.OrderBy(v => v).SequenceEqual(traverseResult).Should().BeTrue();
         }
+
+        [Fact]
+        public void Perform_PreOrder_Traversal()
+        {
+            var values = new[] { 7, 3, 11, 1, 5, 10, 15, 4 };
+
+            foreach (var value in values)
+            {
+                _tree.Insert(value);
+            }
+
+            var traverseResult = new List<int>();
+
+            _tree.Traverse(TraversalMethod.PreOrder, n => traverseResult.Add(n.Value));
+
+            traverseResult.SequenceEqual(new [] {7, 1, 3, 4, 5, 10, 11, 15}).Should().BeTrue();
+        }
+
+        [Fact]
+        public void Perform_PostOrder_Traversal()
+        {
+            var values = new[] { 7, 3, 11, 1, 5, 10, 15, 4 };
+
+            foreach (var value in values)
+            {
+                _tree.Insert(value);
+            }
+
+            var traverseResult = new List<int>();
+
+            _tree.Traverse(TraversalMethod.PostOrder, n => traverseResult.Add(n.Value));
+
+            traverseResult.SequenceEqual(new[] { 1, 3, 4, 5, 10, 11, 15, 7 }).Should().BeTrue();
+        }
     }
 }

@@ -2,6 +2,8 @@
 {
     public enum TraversalMethod
     {
-        InOrder = 0
+        InOrder = 0,
+        PreOrder,
+        PostOrder
     }
 }

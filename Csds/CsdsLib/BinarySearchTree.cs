@@ -63,6 +63,14 @@ namespace CsdsLib
             {
                 TraverseInOrder(Root, onVisitAction);
             }
+            else if (method == TraversalMethod.PreOrder)
+            {
+                TraversePreOrder(Root, onVisitAction);
+            }
+            else if (method == TraversalMethod.PostOrder)
+            {
+                TraversePostOrder(Root, onVisitAction);
+            }
         }
 
         private void TraverseInOrder(TreeNode<TValue> node, Action<TreeNode<TValue>> onVisitAction)
@@ -75,6 +83,30 @@ namespace CsdsLib
             TraverseInOrder(node.Left, onVisitAction);
             onVisitAction?.Invoke(node);
             TraverseInOrder(node.Right, onVisitAction);
+        }
+
+        private void TraversePreOrder(TreeNode<TValue> node, Action<TreeNode<TValue>> onVisitAction)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            onVisitAction?.Invoke(node);
+            TraverseInOrder(node.Left, onVisitAction);
+            TraverseInOrder(node.Right, onVisitAction);
+        }
+
+        private void TraversePostOrder(TreeNode<TValue> node, Action<TreeNode<TValue>> onVisitAction)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            TraverseInOrder(node.Left, onVisitAction);
+            TraverseInOrder(node.Right, onVisitAction);
+            onVisitAction?.Invoke(node);
         }
     }
 }
